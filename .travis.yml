@@ -1,22 +1,19 @@
-sudo: required
+sudo: false
+language: haskell
+cabal: 2.4
 matrix:
-  include:
-  - env: GHCVER=8.4
-  - env: GHCVER=8.6
-  - env: GHCVER=head
-  - os: osx
+  - ghc: "7.0"
+  - ghc: "7.2"
+  - ghc: "7.4"
+  - ghc: "7.6"
+  - ghc: "7.8"
+  - ghc: "7.10"
+  - ghc: "8.0"
+  - ghc: "8.2"
+  - ghc: "8.4"
+  - ghc: "8.6"
 
 script:
-- export HLINT_ARGUMENTS=src
-# - export UNIPLATE_VERBOSE=-1
-- curl -sSL https://raw.github.com/ndmitchell/neil/master/travis.sh | sh
-
-deploy:
-  provider: releases
-  api_key:
-    secure: "AGqjQtLxRE+MXWYuNK0oD2nqyGOUm67T3Bfa8p6fkSDM3hZ8zSeg48YcNb4IL0lB40l2ATK53hvIzdxqxg81pnMZIWZj3NoO/y0DT0uiYBDKN0xX8Lp7lJmjxCl5jyfBRx47t9Evk5HYZoyjPgRR2t4E84N4oSCcv2El1fJY9mU="
-  file_glob: true
-  file:  travis-release/*
-  skip_cleanup: true
-  on:
-    tags: true
+- cabal v2-configure
+- cabal v2-build
+- cabal v2-test
